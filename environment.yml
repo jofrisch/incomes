@@ -1,0 +1,8 @@
+name: income-challenge
+channels:
+ - defaults
+ - conda-forge
+dependencies:
+ - pandas
+ - python=3
+ - scikit-learn
