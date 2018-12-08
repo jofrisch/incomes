@@ -24,7 +24,7 @@ We develop a Python package that implements a `get_pipeline` function that retur
 todo
 
 ### Todo list:
-- [] improve get_pipeline() structure in pipelines.py
-- [] train level1 pipelines on another dataset then level2 ensembling
-- [] add a NN to the level1 models
+- [ ] improve get_pipeline() structure in pipelines.py
+- [ ] train level1 pipelines on another dataset then level2 ensembling
+- [ ] add a NN to the level1 models
 - [x] avoid downloading data if already done
