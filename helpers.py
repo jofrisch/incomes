@@ -26,6 +26,7 @@ class TextSelector(BaseEstimator, TransformerMixin):
     Transformer to select a single column from the data frame to perform additional transformations on
     Use on text columns in the data
     """
+    
     def __init__(self, key):
         self.key = key
 
@@ -42,6 +43,7 @@ class NumberSelector(BaseEstimator, TransformerMixin):
     Transformer to select a single column from the data frame to perform additional transformations on
     Use on numeric columns in the data
     """
+
     def __init__(self, key):
         self.key = key
 
@@ -59,6 +61,7 @@ class NumberSelector(BaseEstimator, TransformerMixin):
 
 
 class DummyTransformer(BaseEstimator, TransformerMixin):
+    """One Hot Encode a Pandas dataframe where all columns are categorical"""
 
     def __init__(self):
         self.dv = DictVectorizer(sparse=False)
@@ -82,6 +85,7 @@ class DummyTransformer(BaseEstimator, TransformerMixin):
 
 class GetDummiesSeries(BaseEstimator, TransformerMixin):
     """One Hot Encode a Serie"""
+
     def __init__(self):
         self.dv = None
 
@@ -101,6 +105,7 @@ class GetDummiesSeries(BaseEstimator, TransformerMixin):
 
 class LabelEncodeByFreq(BaseEstimator, TransformerMixin):
     """ LabelEncode the categorical values of a Series X where 0 is the most frequent value, 1 the 2nd most frequent, etc. """
+
     def __init__(self):
         pass
     
@@ -152,7 +157,8 @@ class TreatMissingsWithCommons(BaseEstimator, TransformerMixin):
 
 
 class KnnImputer(BaseEstimator, TransformerMixin):
-    
+    """Replaces the missing values of a DataFrame within one target variable, based on its k nearest neighbors identified with the other variables"""
+
     def __init__(self, target, n_neighbors = 41):
         self.target = target
         self.n_neighbors = n_neighbors
@@ -215,6 +221,7 @@ class KnnImputer(BaseEstimator, TransformerMixin):
 ###############################
 
 class ClassifierWrapper(BaseEstimator, TransformerMixin):
+    """ Converts an estimator into a transformer."""
     
     def __init__(self, estimator, fit_params=None, use_proba=True, scoring=None):
         self.estimator = estimator
@@ -274,7 +281,13 @@ class PipelineWrapperForEnsembling(BaseEstimator, TransformerMixin):
             return self.pipeline.predict(X)
 
 
+
+###############################
+######## GridSearching ########
+###############################
+
 def runGridSearch(paramGrid, pipe, X_train, y_train, verbose=2, n_jobs=-1, scoring='roc_auc'):
+    """ Run a GridSearchCV for a given pipeline (pipe) on a parameter grid (paramGrid), and print results in an optimal way, following analyzeGridSearchResults()  """
     gs = GridSearchCV(pipe, paramGrid, verbose=verbose, n_jobs=n_jobs, scoring=scoring)
     gs.fit(X_train, y_train)
     analyzeGridSearchResults(gs, decimalsPrecision = 4)
